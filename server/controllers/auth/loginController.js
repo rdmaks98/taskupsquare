@@ -23,29 +23,25 @@ const loginController = {
 		}
 
 		let { email, password } = req.body;
+		const user = await User.findOne({ email: email });
+		if (!user) {
+			return res.json(CustomErrorHandler.invalidEmail());
+		}
+
+		// compare a password
+		const matchpass = await bcrypt.compare(password, user.password);
+		if (!matchpass) {
+			return res.json(CustomErrorHandler.invalidEmail());
+		}
 
 		try {
-			const user = await User.findOne({ email: email });
-
-			if (!user) {
-				return next(CustomErrorHandler.invalidEmail());
-			}
-
-			// compare a password
-			const matchpass = await bcrypt.compare(password, user.password);
-
-			if (!matchpass) {
-				return next(CustomErrorHandler.invalidEmail());
-			}
-
 			// token
 			let generate_token = JwtService.sign({ _id: user._id });
 			res.cookie('access_token', generate_token, {
 				httOnly: true,
 				expires: new Date(Date.now() + 60000),
 			});
-
-			res.json({ generate_token: generate_token });
+			return res.json({ generate_token: generate_token });
 		} catch (err) {
 			return next(err);
 		}
