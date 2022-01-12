@@ -26,6 +26,11 @@ class CustomErrorHandler extends Error {
 	static userRegister(message = 'Please register') {
 		return new CustomErrorHandler(404, message);
 	}
+
+	static invalidToken(message='your resetToken is invalid')
+	{
+		return new CustomErrorHandler(401, message);
+	}
 }
 
 export default CustomErrorHandler;

@@ -48,6 +48,7 @@ router.get('/search-user', userController.filter);
 
 // forgot password
 router.post('/forgot-password', forgotpasswordController.forgotPassword);
-router.get('/reset-password/:token',resetpasswordController.resetPassword);
+router.get('/reset-password/:token', resetpasswordController.resetPassword);
+router.post('/reset-password/:token',resetpasswordController.resetPass);
 
 export default router;

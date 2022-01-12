@@ -24,7 +24,7 @@ const forgotpasswordController = {
 		userdata.resetPasswordToken = access_token;
 		userdata.resetPasswordExpire= Date.now() + 48000000;
 		userdata.save();
-		const message = `http://localhost:2020/reset-password/${userdata._id}`;
+		const message = `http://localhost:2020/api/reset-password/${access_token}`;
 		try {
 			await sendEmail({
 				email: userdata.email,
