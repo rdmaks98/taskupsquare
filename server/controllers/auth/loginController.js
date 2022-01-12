@@ -3,7 +3,7 @@
 import Joi from 'joi';
 import { User } from '../../models';
 import CustomErrorHandler from '../../services/CustomErrorHandler';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import JwtService from '../../services/JwtServices';
 
 const loginController = {

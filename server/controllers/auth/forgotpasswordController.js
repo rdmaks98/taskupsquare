@@ -10,7 +10,6 @@ const forgotpasswordController = {
 	async forgotPassword(req, res, next) {
 		const { email } = req.body;
 		const userdata = await User.findOne({ email: req.body.email });
-		// console.log(data);
 		if (!userdata) {
 			return next(CustomErrorHandler.userRegister());
 		}
@@ -22,9 +21,10 @@ const forgotpasswordController = {
 			id: userdata._id,
 		};
 		const access_token = jwt.sign(payload, secret, { expiresIn: '20000s' });
-		await User.save({ validateBeforeSave: false });
-
-		const message = `http://localhost:2020/reset-password/${userdata.id}/${access_token}`;
+		userdata.resetPasswordToken = access_token;
+		userdata.resetPasswordExpire= Date.now() + 48000000;
+		userdata.save();
+		const message = `http://localhost:2020/reset-password/${userdata._id}`;
 		try {
 			await sendEmail({
 				email: userdata.email,
@@ -33,7 +33,7 @@ const forgotpasswordController = {
 			});
 			return res.json({
 				statusCode: 200,
-				message: `Reset Password link send successfully chedck your email ${userdata.email}`,
+				message: `Reset password link send successfully check your email ${userdata.email}`,
 			});
 		} catch (err) {
 			return next(err);

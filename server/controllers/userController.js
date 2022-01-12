@@ -1,6 +1,6 @@
 /** @format */
 import { User } from '../models';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import Joi from 'joi';
 import CustomErrorHandler from '../services/CustomErrorHandler';
 
