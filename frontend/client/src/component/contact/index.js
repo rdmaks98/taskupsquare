@@ -1,75 +1,37 @@
-import { Card, Grid, TextField } from '@mui/material'
+import { Card, Grid, TextField, CardMedia, Typography, Button, TextareaAutosize } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 
 const Contact = () => {
     return (
-        <div>
-            <Grid container style={{padding:"20px"}}>
-                <Grid item xs={8} >
-                    <Card sx={{maxWidth:"900px"}}>
+        <div style={{ marginTop: "20px" }} id="contact">
+            <Card>
+                <Grid container style={{ padding: "10px" }}>
+                    <Grid item xs={8} >
+                       <Typography gutterBottom variant="h4" component="div">
+                           Contact Us
+                        </Typography>
                         <Box
-                            component="form"
-                            sx={{
-                                '& .MuiTextField-root': { m: 1, width: '25ch' },
-                            }}
-                            noValidate
-                            autoComplete="off"
-                            >
+                            component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '78ch' }, }} noValidate autoComplete="off">
                             <div>
-                                <TextField
-                                    error
-                                    id="outlined-error"
-                                    label="Error"
-                                    defaultValue="Hello World"
-                                />
-                                <TextField
-                                    error
-                                    id="outlined-error-helper-text"
-                                    label="Error"
-                                    defaultValue="Hello World"
-                                    helperText="Incorrect entry."
-                                />
+                                <TextField required id="outlined-required" label="Name" type="text" placeholder="Enter your name here" />
                             </div>
                             <div>
-                                <TextField
-                                    error
-                                    id="filled-error"
-                                    label="Error"
-                                    defaultValue="Hello World"
-                                    variant="filled"
-                                />
-                                <TextField
-                                    error
-                                    id="filled-error-helper-text"
-                                    label="Error"
-                                    defaultValue="Hello World"
-                                    helperText="Incorrect entry."
-                                    variant="filled"
-                                />
+                                <TextField required id="outlined-required" label="Email" type="email" placeholder="person@gmail.com" />
                             </div>
                             <div>
-                                <TextField
-                                    error
-                                    id="standard-error"
-                                    label="Error"
-                                    defaultValue="Hello World"
-                                    variant="standard"
-                                />
-                                <TextField
-                                    error
-                                    id="standard-error-helper-text"
-                                    label="Error"
-                                    defaultValue="Hello World"
-                                    helperText="Incorrect entry."
-                                    variant="standard"
-                                />
+                                <TextareaAutosize required id="outlined-required" label="comment" minRows={4} placeholder="enter your comment here...." style={{ width: 680 }} name="comment"/>
+                            </div>
+                            <div>
+                                <Button sx={{m:2}} variant="contained" size="large" color="success" >Contact us</Button>
                             </div>
                         </Box>
-                    </Card>
+                    </Grid>
+                    <Grid item xs={4} >
+                        <CardMedia component="img" height="360" image="/images/contact2.png" alt="contact field" />
+                    </Grid>
                 </Grid>
-               
-            </Grid>
+            </Card>
         </div>
     )
 }

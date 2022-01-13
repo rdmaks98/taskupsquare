@@ -15,13 +15,13 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Typography } from '@mui/material';
 
 const timeLineTop = {
-    position:"relative",
+    position:"static",
     marginTop:"110px",
 }
 
 const TimeLine = () => {
     return (
-        <div>
+        <div id="top">
             <Container>
                 <Timeline position="alternate" style={timeLineTop}>
                     <TimelineItem>
