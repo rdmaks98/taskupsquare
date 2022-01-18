@@ -1,1 +1,3 @@
 node_modules
+sendmail.js
+config.env
