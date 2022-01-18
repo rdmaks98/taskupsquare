@@ -3,6 +3,8 @@ import { User } from '../models';
 import bcrypt from 'bcryptjs';
 import Joi from 'joi';
 import CustomErrorHandler from '../services/CustomErrorHandler';
+const fs = require("fs");
+const path = require("path");
 
 const userController = {
 	// me
@@ -21,20 +23,23 @@ const userController = {
 
 	// update user
 	async update(req, res, next) {
+		
+
 		const user = await User.findOne({ _id: req.user._id });
 		if (!user) {
 			return next(CustomErrorHandler.notFound());
 		}
 		const { firstname, lastname } = req.body;
-
+	
 		try {
+			
 			const result = await User.findOneAndUpdate(
 				{ _id: user._id },
 				{
 					$set: {
 						firstname: firstname,
 						lastname: lastname,
-						profilePhoto: req.file.filename,
+						profilePhoto: req.file.path,
 					},
 				}
 			);

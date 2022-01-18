@@ -9,6 +9,14 @@ import cookieParser from 'cookie-parser';
 app.use(cookieParser());
 import routes from './routes';
 
+const cors = require("cors");
+const corsOptions = {
+	origin: '*',
+	credentials: true,            //access-control-allow-credentials:true
+	optionSuccessStatus: 200,
+}
+
+app.use(cors(corsOptions))
 // databse coonection
 
 // option 1
@@ -38,4 +46,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(errorHandler);
 app.use('/api', routes);
-app.listen(APP_PORT, () => console.log(`listening on port ${APP_PORT}`));
+app.listen(APP_PORT, () => {
+	const url = `http://localhost:${APP_PORT}/api/`;
+	console.log(url);
+});

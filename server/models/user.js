@@ -9,7 +9,7 @@ const userSchema = new Schema(
 		lastname: { type: String, required: true },
 		email: { type: String, required: true, unique: true },
 		password: { type: String, required: true },
-		profilePhoto: { type: String },
+		profilePhoto: { data: Buffer,type: String },
 		resetPasswordToken: String,
 		resetPasswordExpire: Date ,
 	},

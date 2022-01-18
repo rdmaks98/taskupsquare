@@ -1,48 +1,64 @@
+import React, { useEffect, useState } from 'react'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import React from 'react'
 
 const timeLineTop = {
     position: "static",
     marginTop: "110px",
 }
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 const User = () => {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        async function getUsers() {
+            const response = await fetch(`http://localhost:2020/api/user`);
+            console.log(response)
+            if (!response.ok) {
+                const message = `An error occured: ${response.statusText}`;
+                window.alert(message);
+                return;
+            }
+
+            const users = await response.json();
+            console.log(users);
+            setUsers(users);
+        }
+
+        getUsers();
+
+        return;
+    }, []);
+
+
     return (
         <div style={timeLineTop}>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 600 }} aria-label="simple table">
                     <TableHead>
                         <TableRow style={{ color: "#175C19", backgroundColor: "#81c784"}}>
+                            <TableCell>No.</TableCell>
                             <TableCell>Firstname</TableCell>
                             <TableCell>Lastname</TableCell>
-                            <TableCell>Email</TableCell>
                             <TableCell>Profile</TableCell>
+                            <TableCell>Email</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {users.map((user,i) => (
                             <TableRow
-                                key={row.name}
+                                key={user._id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell component="th" scope="row">
-                                    {row.name}
+                                <TableCell component="th" scope="row">{i+1}</TableCell>
+                                <TableCell>
+                                    {user.firstname}
                                 </TableCell>
-                                <TableCell>{row.calories}</TableCell>
-                                <TableCell>{row.fat}</TableCell>
-                                <TableCell>{row.carbs}</TableCell>
+                                <TableCell>{user.lastname}</TableCell>
+                                
+                                <TableCell><img src={user.profilePhoto}></img>{user.profilePhoto}</TableCell>
+                                
+                                <TableCell>{user.email}</TableCell>
                                
                             </TableRow>
                         ))}
