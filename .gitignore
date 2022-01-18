@@ -1,3 +1,4 @@
 node_modules
-sendmail.js
-config.env
+/sendEmail
+.env
+.vscode/
