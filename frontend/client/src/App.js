@@ -1,7 +1,6 @@
 /** @format */
 
 import './App.css';
-import Component from './component';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import User from "./Pages/user";
 import Index from "./Pages/";

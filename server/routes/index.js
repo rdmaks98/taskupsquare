@@ -9,13 +9,13 @@ import {
 	resetpasswordController,
 	userController,
 } from '../controllers';
-
 import authenticate from '../middlewares/authenticate';
 
+const app = express();
 const router = express.Router();
 
 // user image
-router.use(express.static(__dirname + './public/'));
+router.use('/public/uploads/',express.static(__dirname + './public/'));
 
 var Storage = multer.diskStorage({
 	destination: './public/uploads',
@@ -24,9 +24,22 @@ var Storage = multer.diskStorage({
 	},
 });
 
+const fileFilter = (req,file,cb) => {
+	if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg'){
+		cb(null,true)
+	}
+	else{
+		cb(null,false)
+	}
+}
+
 var upload = multer({
-	storage: Storage,
+	storage: Storage,limits:{
+		fileSize : 1024*1024*8
+	},
+	fileFilter:fileFilter
 }).single('profilePhoto');
+
 
 // Authentication
 router.post('/register', registerController.register);
@@ -34,6 +47,8 @@ router.post('/login', loginController.login);
 
 // control particular user
 // router.get('/me', authenticate, userController.me);
+app.use('/profile', express.static('public/uploads'));
+
 router.put('/update-profile/', authenticate, upload, userController.update);
 router.get('/getuser', authenticate, userController.getUserById);
 
